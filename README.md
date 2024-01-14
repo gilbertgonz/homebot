@@ -1,6 +1,7 @@
 # Homebot
 
  - Home robot for monitoring and survailence
+ - Inspired by [Amazon's Astro](https://www.amazon.com/Introducing-Amazon-Astro/dp/B078NSDFSB)
 
 ## System Design
 
@@ -36,4 +37,14 @@
     - Increase height of camera placement?
     - Touch screen interface?
 
-    
+- **Pi info:**
+
+    - User: gil
+    - Password: password
+    - Static IP: (netplan pending, usually 10.0.0.240 at home)
+
+- **Notes:**
+    - To build docker images for a different system architecture you need to install qemu:
+        ```
+        sudo apt install qemu-user-static
+        ```
