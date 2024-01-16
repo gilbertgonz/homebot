@@ -1,4 +1,5 @@
-FROM ubuntu:jammy
+FROM arm64v8/ubuntu:22.04
+# FROM ubuntu:jammy
 
 # Installing ROS2 Humble
 ENV LANG=en_US.UTF-8 \

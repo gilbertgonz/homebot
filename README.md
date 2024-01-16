@@ -47,5 +47,7 @@
     - To build docker images for a different system architecture you need to install qemu:
         ```
         sudo apt install qemu-user-static
-        docker build --force-rm --platform linux/aarch64 -t homebot/base_humble:aarch64 ./base_humble/
+
+        # ensure you're using arm64 compatible base image like 'arm64v8/ubuntu:22.04'
+        docker build --force-rm --platform linux/arm64 -t homebot/base_humble:arm64 ./base_humble/ 
         ```

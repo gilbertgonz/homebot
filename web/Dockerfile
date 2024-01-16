@@ -1,10 +1,10 @@
-FROM homebot/base_humble:latest
+FROM homebot/base_humble:arm64
 
 COPY requirements.txt /
 
 # Installing dependencies
 RUN apt update && apt upgrade -y && apt install -y \
-    python3-pip \
+    python3-pip libgl1 \
     && pip install -r /requirements.txt \
     && rm -rf /var/lib/apt/lists/*
 
