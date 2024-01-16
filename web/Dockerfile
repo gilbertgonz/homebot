@@ -1,4 +1,4 @@
-FROM homebot/base_humble as build
+FROM homebot/base_humble:latest
 
 COPY requirements.txt /
 
@@ -9,19 +9,13 @@ RUN apt update && apt upgrade -y && apt install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy files
-COPY images /
-COPY static /
-COPY templates /
+COPY images /images
+COPY static /static
+COPY templates /templates
 COPY server.py /server.py
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
-#####################
-# Final release build
-FROM scratch
-
-COPY --from=build / /
 
 WORKDIR /
 

@@ -1,4 +1,4 @@
-FROM arm64v8/ubuntu:22.04 as build
+FROM ubuntu:jammy
 
 # Installing ROS2 Humble
 ENV LANG=en_US.UTF-8 \
@@ -29,11 +29,5 @@ RUN apt-get remove -y --auto-remove build-essential gcc
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
-#####################
-# Final release build
-FROM scratch
-
-COPY --from=build / /
 
 ENTRYPOINT ["/entrypoint.sh"]

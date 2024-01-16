@@ -1,4 +1,4 @@
-FROM homebot/base_humble as build
+FROM homebot/base_humble
 
 COPY requirements.txt /
 
@@ -13,12 +13,6 @@ COPY ps4_driver.py /ps4_driver.py
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
-#####################
-# Final release build
-FROM scratch
-
-COPY --from=build / /
 
 WORKDIR /
 

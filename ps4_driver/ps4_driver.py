@@ -169,7 +169,7 @@ class PS4Publisher(Node):
             self.get_logger().info("\nExiting (Ctrl + C)")
             exit(1)
 
-    def wait_for_interface(self, timeout=30):
+    def wait_for_interface(self, timeout=10):
         self.get_logger().info("Waiting for interface: {} to become available . . .".format(self.interface))
         for i in range(timeout):
             if os.path.exists(self.interface):

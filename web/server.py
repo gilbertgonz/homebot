@@ -3,28 +3,24 @@ import cv2
 
 app = Flask(__name__)
 
-# Shared variable for storing the latest image
-shared_frame = None
-
 def gen():
     """Video streaming generator function."""
     vs = cv2.VideoCapture(0)
+    
     while True:
-        global shared_frame
-
-        if shared_frame is not None:
-            ret, jpeg = cv2.imencode('.jpg', shared_frame)
-            frame = jpeg.tobytes()
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
-        else:
-            # If no new image, continue streaming image
-            ret, frame = vs.read()
+        ret, frame = vs.read()
+        
+        try:
             ret, jpeg = cv2.imencode('.jpg', frame)
             frame = jpeg.tobytes()
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+            yield (
+                b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n'
+            )
+        except cv2.error as e:
+            # Handle the OpenCV error
+            print(f"OpenCV Error: {e}")
+            break
 
 @app.route('/')
 def index():

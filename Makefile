@@ -5,6 +5,7 @@
 SHELL := /bin/bash
 NAMESPACE := homebot
 DOCKER_BUILDKIT := 1
+PLATFORM := aarch64
 
 # No files to check for these targets
 .PHONY: help cleanup build
