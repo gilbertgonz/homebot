@@ -9,7 +9,6 @@ RUN apt update && apt upgrade -y && apt install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy files
-COPY images /images
 COPY static /static
 COPY templates /templates
 COPY server.py /server.py
