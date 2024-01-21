@@ -17,8 +17,19 @@ def init():
     GPIO.setup(LEFT_BRAKE_PIN, GPIO.OUT)
 
 
-def go(sleep): 
+def forward(sleep): 
     GPIO.output(LEFT_DIR_PIN, True)
+    GPIO.output(LEFT_BRAKE_PIN, False)
+
+    motorl = GPIO.PWM(LEFT_PWM_PIN, 50)
+    motorl.start(0)
+    motorl.ChangeDutyCycle(20)
+
+    time.sleep(sleep)
+    GPIO.cleanup((LEFT_PWM_PIN))
+
+def reverse(sleep): 
+    GPIO.output(LEFT_DIR_PIN, False)
     GPIO.output(LEFT_BRAKE_PIN, False)
 
     motorl = GPIO.PWM(LEFT_PWM_PIN, 50)
@@ -37,9 +48,11 @@ def main():
     sleep_time = 0.030
 
     while True:
-        go(sleep_time)
+        brake(sleep_time)
+        forward(sleep_time)
         time.sleep(2)
         brake(sleep_time)
+        reverse(sleep_time)
         time.sleep(2)
 
 if __name__ == "__main__":
