@@ -1,17 +1,18 @@
-body{
-background-color:#ffffff;
-font-family: "Usual Light",Arial,sans-serif;
+body {
+  font-family:MD Primer Bold,Rubik,Lato,Lucida Grande,Lucida Sans Unicode,Tahoma,Sans-Serif;  font-style: normal;
+  background-color: #15202B;
+  background: linear-gradient(0deg, #121213,#15202B);
 }
 
 .top_bar{
   text-align: center;
   position: static;
-  width: 100%;
   color:#ffffff;
-  background: #010040;
-  height: 100px;
+  text-shadow:0 10px 10px rgba(0,0,0,.5);
+  height: 200px;
+  font-size: 50px;
   margin: 0;
-  padding-top: 1%;
+  padding: 0;
 }
 
 .img-container{
@@ -22,6 +23,7 @@ font-family: "Usual Light",Arial,sans-serif;
     text-align:center;
     margin-left: auto;
     margin-right: auto;
+    padding-top: 50px;
 }
 
 img{
@@ -29,8 +31,30 @@ img{
   height: 100%;
 }
 
+#joyDiv{
+  width: 600px;
+  height: 600px;
+
+}
+
+/* Center items */
+.flex-parent {
+  display: flex;
+}
+.jc-center {
+  justify-content: center;
+}
+
+.joyPos {
+  height: 80px;
+  width: 160px;
+  font-size: 80px;
+  border-radius: 15px;
+  background-color:#15202B;
+  color:#ffffff
+}
+
 footer{
-  background-color: #010040;
   padding: 10px;
   text-align: center;
   color: white;

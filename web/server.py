@@ -1,4 +1,8 @@
-from flask import Flask, render_template, Response
+import sys
+sys.path.append('../')
+from hub_motor_controller.hub_driver import move
+
+from flask import Flask, render_template, Response, request, jsonify
 import cv2
 
 app = Flask(__name__)
@@ -29,9 +33,15 @@ def index():
 
 @app.route('/video_feed')
 def video_feed():
-    """Video streaming route. Put this in the src attribute of an img tag."""
+    """Video streaming route. Put this in the src attribute of img tag."""
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route('/update_joystick', methods=['POST'])
+def receive_joystick():
+    data = request.json
+    move(data)
+    return jsonify({'status': 'success'})
+
+
 if __name__ == '__main__':   
-    # Run the Flask application
     app.run(host='0.0.0.0', port=5000, debug=True, threaded=True)

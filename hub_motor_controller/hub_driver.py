@@ -1,4 +1,4 @@
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 import time
 
 # To install:
@@ -20,10 +20,11 @@ def init():
 def forward(sleep): 
     GPIO.output(LEFT_DIR_PIN, True)
     GPIO.output(LEFT_BRAKE_PIN, False)
+    
 
     motorl = GPIO.PWM(LEFT_PWM_PIN, 50)
     motorl.start(0)
-    motorl.ChangeDutyCycle(20)
+    motorl.ChangeDutyCycle(40)
 
     time.sleep(sleep)
     GPIO.cleanup((LEFT_PWM_PIN))
@@ -34,7 +35,7 @@ def reverse(sleep):
 
     motorl = GPIO.PWM(LEFT_PWM_PIN, 50)
     motorl.start(0)
-    motorl.ChangeDutyCycle(20)
+    motorl.ChangeDutyCycle(40)
 
     time.sleep(sleep)
     GPIO.cleanup((LEFT_PWM_PIN))
@@ -42,6 +43,12 @@ def reverse(sleep):
 def brake(sleep): 
     GPIO.output(LEFT_BRAKE_PIN, True)
     time.sleep(sleep)
+
+# TODO: translate raw data to move motor
+def move(data):
+    x = data.get('x', 0)
+    y = data.get('y', 0)
+    # print(f"recived x:{x}, y:{y}")
 
 def main():
     init()
