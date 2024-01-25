@@ -1,24 +1,9 @@
 version: "3.9"
 services:
-  web:
-    restart: unless-stopped
+  homebot:
+    restart: always
     image: homebot/web
     network_mode: "host"
     ipc: "host"
     privileged: true
-    environment:
-      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}  # 0 is default value, to isolate ROS2 msgs use a domain id between 1-101
-    volumes:
-      - /dev/shm:/dev/shm
     command: python3 server.py
-  ps4_driver:
-    restart: unless-stopped
-    image: homebot/ps4_driver
-    network_mode: "host"
-    ipc: "host"
-    privileged: true
-    environment:
-      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}  # 0 is default value, to isolate ROS2 msgs use a domain id between 1-101
-    volumes:
-      - /dev/shm:/dev/shm
-    command: python3 ps4_driver.py

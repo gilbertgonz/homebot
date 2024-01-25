@@ -32,10 +32,6 @@ function sendJoystickToBackend(data) {
 
 setInterval(function() {
     var x = joy.GetX();
-    sendJoystickToBackend({ x });
-}, 50);
-
-setInterval(function() {
     var y = joy.GetY();
-    sendJoystickToBackend({ y });
+    sendJoystickToBackend({ x, y });
 }, 50);

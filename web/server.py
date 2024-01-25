@@ -1,14 +1,13 @@
-import sys
-sys.path.append('../')
-from hub_motor_controller.hub_driver import move
-
 from flask import Flask, render_template, Response, request, jsonify
 import cv2
+from libs.control import receive
 
 app = Flask(__name__)
 
 def gen():
-    """Video streaming generator function."""
+    '''
+    Video streaming generator function.
+    '''
     vs = cv2.VideoCapture(0)
     
     while True:
@@ -28,18 +27,25 @@ def gen():
 
 @app.route('/')
 def index():
-    """Video streaming home page."""
+    '''
+    Video streaming home page.
+    '''
     return render_template('index.html')
 
 @app.route('/video_feed')
 def video_feed():
-    """Video streaming route. Put this in the src attribute of img tag."""
+    '''
+    Video streaming route. Put this in the src attribute of img tag.
+    '''
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/update_joystick', methods=['POST'])
 def receive_joystick():
+    '''
+    Receive data from frontend joystick
+    '''
     data = request.json
-    move(data)
+    receive(data)
     return jsonify({'status': 'success'})
 
 
