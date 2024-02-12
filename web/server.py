@@ -1,6 +1,5 @@
 from flask import Flask, render_template, Response, request, jsonify
 import cv2
-import subprocess
 
 from libs.control import receive
 
@@ -54,5 +53,3 @@ def receive_joystick():
 if __name__ == '__main__':  
     port=5000 
     app.run(host='0.0.0.0', port=port, debug=True, threaded=True)
-    ngrok_process = subprocess.Popen(['ngrok', 'http', str(port)])
-    ngrok_process.wait()
