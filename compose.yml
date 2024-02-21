@@ -2,7 +2,7 @@ version: "3.9"
 services:
   homebot:
     restart: always
-    image: homebot/web
+    image: homebot/web:local
     network_mode: "host"
     ipc: "host"
     privileged: true

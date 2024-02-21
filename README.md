@@ -26,8 +26,6 @@
 - **Software:**
 
     - Containerized environment
-    - Host web interface via github
-    - Backend running ROS2 and Django?
     - View camera feed and control robot over internet
 
 - **Future additions:**
@@ -43,11 +41,36 @@
     - Password: password
     - Static IP: (netplan pending, usually 10.0.0.240 at home)
 
-- **Notes:**
-    - To build docker images for a different system architecture you need to install qemu:
+
+- **Deployment Process:**
+    1. Build image, save it, and scp to target machine:
         ```
+        # install qemu
         sudo apt install qemu-user-static
 
         # ensure you're using arm64 compatible base image like 'ubuntu:jammy'
         docker build --force-rm --platform linux/arm64 -t homebot/web:arm64 .
+        
+        # save image
+        docker save d9ddd8f743b9 > test3.tar
+
+        # scp to target machine
+        scp -C test3.tar gil@10.0.0.240:/home/gil
+        ```
+    2. In target machine load image, run it, and run ngrok all in background:
+        ```
+        # load image
+        docker load -i test3.tar
+
+        # run compose file
+        docker compose up --remove-orphans -d
+
+        # run ngrok
+        ngrok http 5000 > /dev/null &
+
+        # curl the ngrok url
+        export WEBHOOK_URL="$(curl http://localhost:4040/api/tunnels | jq ".tunnels[0].public_url")"
+        
+        # print url
+        echo $WEBHOOK_URL
         ```
