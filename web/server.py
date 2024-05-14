@@ -67,6 +67,12 @@ def log_txt(ip):
     if file_time is None:
         file_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 
+    # Create save dir
+    dir = './server_logs'
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+    file_name = f'{dir}/{file_time}_server_log.txt'
+
 
     if response.status_code == 200:
         data = response.json()
@@ -78,7 +84,7 @@ def log_txt(ip):
         log_msg = f"{timestamp} --- IP Address: {ip}"
 
     # Write to txt file
-    with open(f'/server_logs/{file_time}_server_log.txt', 'a') as f:
+    with open(file_name, 'a') as f:
         f.write(log_msg + '\n')
 
 
