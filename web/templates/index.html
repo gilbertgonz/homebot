@@ -5,39 +5,22 @@
 
     <title>HomeBot</title>
     
-    <script src="../static/js/joy.js"></script>
     <link rel="stylesheet" type="text/css" href="../static/style.css">    
+
   </head>
 
   <body>
     <!-- Title -->
     <div class="top_bar">
       <p><span style="font-size: 120px;font-weight: 550;">HomeBot</span><br>
-        <span><img style="filter: drop-shadow(0 10px 10px #000000);width: 10%;height: 10%;display:inline-block;vertical-align:middle;" src="../static/giltech.png"></span>
       </p>
     </div>
-    <br>
     
     <!-- Video feed -->
     <div class="img-container">
         <img src="{{ url_for('video_feed') }}">
     </div>
     <br>
-
-    <!-- Joystick -->
-    <div class="flex-parent jc-center">
-      <div id="joyDiv"></div>
-    </div>
-    
-    <!-- Pos X and Y -->
-    <div class="flex-parent jc-center">
-      <div style="font-size: 50px;color:#ffffff;margin-bottom: 50px;" >
-        X : <input class = "joyPos" id="joyX" type="text" /></br>
-        Y : <input class = "joyPos" id="joyY" type="text" />
-      </div>
-    </div>
-
-    <script src="../static/js/app.js"></script>
 
     <footer>Homebot Inc. All right reserved &#169;</footer>
           

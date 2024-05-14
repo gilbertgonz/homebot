@@ -17,8 +17,6 @@ body {
 
 .img-container{
     width:50%;
-    /* border: 3px solid #010040; */
-    /* border-radius: 6px; */
     overflow: hidden; 
     text-align:center;
     margin-left: auto;
@@ -31,27 +29,12 @@ img{
   height: 100%;
 }
 
-#joyDiv{
-  width: 600px;
-  height: 600px;
-
-}
-
 /* Center items */
 .flex-parent {
   display: flex;
 }
 .jc-center {
   justify-content: center;
-}
-
-.joyPos {
-  height: 80px;
-  width: 160px;
-  font-size: 80px;
-  border-radius: 15px;
-  background-color:#15202B;
-  color:#ffffff
 }
 
 footer{

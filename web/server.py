@@ -5,8 +5,6 @@ import requests
 from datetime import datetime
 import os
 
-from libs.control import receive
-
 app = Flask(__name__)
 
 # Setting up basic authentication
@@ -97,16 +95,6 @@ def video_feed():
 
     log_txt(request.remote_addr)
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
-@app.route('/update_joystick', methods=['POST'])
-def receive_joystick():
-    '''
-    Receive data from frontend joystick
-    '''
-    data = request.json
-    receive(data)
-    return jsonify({'status': 'success'})
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=os.environ.get('PORT'), debug=True, threaded=True)
