@@ -25,12 +25,12 @@ HomeBot is an open source video surveillance application. It was made to offer a
 
 2. Build:
     ```
-    @ docker build --build-arg USER_ARG=enter_username --build-arg PASSWD_ARG=enter_passwd --build-arg PORT_ARG=enter_port -t homebot  .
+    $ docker build --build-arg USER_ARG=enter_username --build-arg PASSWD_ARG=enter_passwd --build-arg PORT_ARG=enter_port -t homebot  .
     ```
 
 3. Run:
     ```
-    @ docker compose up --remove-orphans -d
+    $ docker compose up --remove-orphans -d
     ```
 
 4. Open browser and see video stream:
