@@ -1,6 +1,5 @@
 import RPi.GPIO as GPIO
 import time
-from simple_pid import PID
 
 LEFT_PWM_PIN   = 32
 LEFT_DIR_PIN   = 31
@@ -92,7 +91,6 @@ def receive(data):
         right_motor_x = map_value(x, -100, 0, 40, 0) # turn left
 
     # TODO: PID control
-    # pid = PID(1, 0.1, 0.05, setpoint=1)
 
     left_motor_value = left_motor_y + left_motor_x
     right_motor_value = right_motor_y + right_motor_x

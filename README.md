@@ -49,7 +49,7 @@
         sudo apt install qemu-user-static
 
         # ensure you're using arm64 compatible base image like 'ubuntu:jammy'
-        docker build --force-rm --platform linux/arm64 -t homebot/web:arm64 .
+        docker build --force-rm --build-arg USER_ARG=enter_username --build-arg PASSWD_ARG=enter_passwd --build-arg PORT_ARG=enter_port --platform linux/arm64 -t homebot/web:arm64 .
         
         # save image
         docker save d9ddd8f743b9 > test3.tar
@@ -62,15 +62,8 @@
         # load image
         docker load -i test3.tar
 
+        # tag image
+        docker tag $image_id homebot/web:latest
+
         # run compose file
         docker compose up --remove-orphans -d
-
-        # run ngrok
-        ngrok http 5000 > /dev/null &
-
-        # curl the ngrok url
-        export WEBHOOK_URL="$(curl http://localhost:4040/api/tunnels | jq ".tunnels[0].public_url")"
-        
-        # print url
-        echo $WEBHOOK_URL
-        ```

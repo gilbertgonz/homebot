@@ -1,9 +1,11 @@
 version: "3.9"
 services:
-  homebot:
-    restart: always
-    image: homebot/web:local
+  web:
+    init: true
+    restart: unless-stopped
+    image: homebot/web:latest
     network_mode: "host"
-    ipc: "host"
     privileged: true
+    volumes:
+      - ./server_logs:/server_logs
     command: python3 server.py

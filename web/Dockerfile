@@ -1,5 +1,15 @@
 FROM ubuntu:jammy
 
+# Args
+ARG USER_ARG="default"
+ARG PASSWD_ARG="default"
+ARG PORT_ARG=1234
+
+# Convert args to envs
+ENV USER=${USER_ARG}
+ENV PASSWD=${PASSWD_ARG}
+ENV PORT=${PORT_ARG}
+
 COPY requirements.txt /
 
 # Installing dependencies
