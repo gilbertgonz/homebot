@@ -1,5 +1,14 @@
-# Homebot
-
+```
+                       $$\   $$\                                   $$$$$$$\            $$\     
+                       $$ |  $$ |                                  $$  __$$\           $$ |    
+                       $$ |  $$ | $$$$$$\  $$$$$$\$$$$\   $$$$$$\  $$ |  $$ | $$$$$$\$$$$$$\   
+                       $$$$$$$$ |$$  __$$\ $$  _$$  _$$\ $$  __$$\ $$$$$$$\ |$$  __$$\_$$  _|  
+                       $$  __$$ |$$ /  $$ |$$ / $$ / $$ |$$$$$$$$ |$$  __$$\ $$ /  $$ |$$ |    
+                       $$ |  $$ |$$ |  $$ |$$ | $$ | $$ |$$   ____|$$ |  $$ |$$ |  $$ |$$ |$$\ 
+                       $$ |  $$ |\$$$$$$  |$$ | $$ | $$ |\$$$$$$$\ $$$$$$$  |\$$$$$$  |\$$$$  |
+                       \__|  \__| \______/ \__| \__| \__| \_______|\_______/  \______/  \____/
+```
+ 
  - HomeBot is an open source video surveillance application. It was made to offer an alternative to high-cost monitoring and surveillance systems. It currently provides video streaming with basic authentication and logs info of connected clients (for security purposes), all in a containerized environment for easy deployment to any platform with a USB camera
 
 *Demo vid/photos coming soon*
