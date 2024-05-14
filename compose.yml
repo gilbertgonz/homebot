@@ -3,7 +3,7 @@ services:
   web:
     init: true
     restart: unless-stopped
-    image: homebot/web:latest
+    image: homebot:latest
     network_mode: "host"
     privileged: true
     volumes:

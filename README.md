@@ -1,17 +1,19 @@
 ```
-$$\   $$\                                   $$$$$$$\            $$\     
-$$ |  $$ |                                  $$  __$$\           $$ |    
-$$ |  $$ | $$$$$$\  $$$$$$\$$$$\   $$$$$$\  $$ |  $$ | $$$$$$\$$$$$$\   
-$$$$$$$$ |$$  __$$\ $$  _$$  _$$\ $$  __$$\ $$$$$$$\ |$$  __$$\_$$  _|  
-$$  __$$ |$$ /  $$ |$$ / $$ / $$ |$$$$$$$$ |$$  __$$\ $$ /  $$ |$$ |    
-$$ |  $$ |$$ |  $$ |$$ | $$ | $$ |$$   ____|$$ |  $$ |$$ |  $$ |$$ |$$\ 
-$$ |  $$ |\$$$$$$  |$$ | $$ | $$ |\$$$$$$$\ $$$$$$$  |\$$$$$$  |\$$$$  |
+@@\   @@\                                   @@@@@@@\            @@\     
+@@ |  @@ |                                  @@  __@@\           @@ |    
+@@ |  @@ | @@@@@@\  @@@@@@\@@@@\   @@@@@@\  @@ |  @@ | @@@@@@\@@@@@@\   
+@@@@@@@@ |@@  __@@\ @@  _@@  _@@\ @@  __@@\ @@@@@@@\ |@@  __@@\_@@  _|  
+@@  __@@ |@@ /  @@ |@@ / @@ / @@ |@@@@@@@@ |@@  __@@\ @@ /  @@ |@@ |    
+@@ |  @@ |@@ |  @@ |@@ | @@ | @@ |@@   ____|@@ |  @@ |@@ |  @@ |@@ |@@\ 
+@@ |  @@ |\@@@@@@  |@@ | @@ | @@ |\@@@@@@@\ @@@@@@@  |\@@@@@@  |\@@@@  |
 \__|  \__| \______/ \__| \__| \__| \_______|\_______/  \______/  \____/
 ```
  
- - HomeBot is an open source video surveillance application. It was made to offer an alternative to high-cost monitoring and surveillance systems. It currently provides video streaming with basic authentication and logs info of connected clients (for security purposes), all in a containerized environment for easy deployment to any platform with a USB camera
+HomeBot is an open source video surveillance application. It was made to offer an alternative to high-cost monitoring and surveillance systems. It currently provides video streaming with basic authentication and logs info of connected clients (for security purposes), all in a containerized environment for easy deployment to any platform with a USB camera
 
-*Demo vid/photos coming soon*
+<p align="center">
+  <img src="https://github.com/gilbertgonz/homebot/blob/main/imgs/example.jpg">
+</p>
 
 ## How to run:
 1. Install [docker](https://docs.docker.com/engine/install/)
@@ -23,12 +25,12 @@ $$ |  $$ |\$$$$$$  |$$ | $$ | $$ |\$$$$$$$\ $$$$$$$  |\$$$$$$  |\$$$$  |
 
 2. Build:
     ```
-    $ docker build --build-arg USER_ARG=enter_username --build-arg PASSWD_ARG=enter_passwd --build-arg PORT_ARG=enter_port -t homebot  .
+    @ docker build --build-arg USER_ARG=enter_username --build-arg PASSWD_ARG=enter_passwd --build-arg PORT_ARG=enter_port -t homebot  .
     ```
 
 3. Run:
     ```
-    $ docker compose up --remove-orphans -d
+    @ docker compose up --remove-orphans -d
     ```
 
 4. Open browser and see video stream:
