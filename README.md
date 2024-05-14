@@ -8,7 +8,7 @@
  - **Hardware:**
 
     - Raspberry Pi 4
-    - Web cam
+    - USB Camera
     - Hub motors from hoverboard
     - 3D Printed base
 
@@ -17,6 +17,7 @@
     - Real-time video streaming
     - Basic authentication
     - Logging
+    - Control of robot via web browser
  
  
  
