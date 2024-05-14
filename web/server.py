@@ -10,16 +10,15 @@ from libs.control import receive
 app = Flask(__name__)
 
 # Setting up basic authentication
-username = os.environ.get('USER')
-password = os.environ.get('PASSWD')
-
-app.config['BASIC_AUTH_USERNAME'] = str(username)
-app.config['BASIC_AUTH_PASSWORD'] = str(password)
+app.config['BASIC_AUTH_USERNAME'] = str(os.environ.get('USER'))
+app.config['BASIC_AUTH_PASSWORD'] = str(os.environ.get('PASSWD'))
 app.config['BASIC_AUTH_FORCE'] = True
 basic_auth = BasicAuth(app)
 
+# Global vars
 init_vid = False
 vs = None
+file_time = None
 
 def gen():
     '''
@@ -54,6 +53,8 @@ def gen():
         init_vid = False
 
 def log_txt(ip):
+    global file_time
+
     # Geolocation API URL
     api_url = f"http://ip-api.com/json/{ip}"
 
@@ -63,7 +64,8 @@ def log_txt(ip):
     # Timestamp
     current_time = datetime.now()
     timestamp = current_time.strftime("%d/%b/%Y %H:%M:%S")
-    file_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+    if file_time is None:
+        file_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 
 
     if response.status_code == 200:
@@ -107,5 +109,4 @@ def receive_joystick():
 
 
 if __name__ == '__main__':
-    port = os.environ.get('PORT')
-    app.run(host='0.0.0.0', port=port, debug=True, threaded=True)
+    app.run(host='0.0.0.0', port=os.environ.get('PORT'), debug=True, threaded=True)

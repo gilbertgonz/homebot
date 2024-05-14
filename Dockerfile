@@ -19,11 +19,8 @@ RUN apt update && apt upgrade -y && apt install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy files
-COPY static /static
-COPY templates /templates
-COPY libs/ /libs
-COPY server.py /server.py
+COPY web/ /web
 
-WORKDIR /
+WORKDIR /web
 
 CMD ["python3", "server.py"]
