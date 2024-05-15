@@ -16,7 +16,6 @@ basic_auth = BasicAuth(app)
 # Global vars
 init_vid = False
 vs = None
-file_time = None
 
 def gen():
     '''
@@ -51,8 +50,6 @@ def gen():
         init_vid = False
 
 def log_txt(ip):
-    global file_time
-
     # Geolocation API URL
     api_url = f"http://ip-api.com/json/{ip}"
 
@@ -62,14 +59,12 @@ def log_txt(ip):
     # Timestamp
     current_time = datetime.now()
     timestamp = current_time.strftime("%d/%b/%Y %H:%M:%S")
-    if file_time is None:
-        file_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 
     # Create save dir
     dir = './server_logs'
     if not os.path.exists(dir):
         os.makedirs(dir)
-    file_name = f'{dir}/{file_time}_server_log.txt'
+    file_name = f'{dir}/server_log.txt'
 
 
     if response.status_code == 200:
