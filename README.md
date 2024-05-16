@@ -9,7 +9,7 @@
 \__|  \__| \______/ \__| \__| \__| \_______|\_______/  \______/  \____/
 ```
  
-HomeBot is an open source video surveillance application. It was made to offer an alternative to high-cost monitoring and surveillance systems. It currently provides video streaming with basic authentication and logs info of connected clients (for security purposes), all in a containerized environment for easy deployment to any platform with a USB camera
+HomeBot is an open source video surveillance application. It was made to offer an alternative to high-cost monitoring and surveillance systems. It currently provides real-time video streaming with basic authentication and logs info of connected clients (for security purposes), all in a containerized environment for easy deployment to any platform with a USB camera
 
 <p align="center">
   <img src="https://github.com/gilbertgonz/homebot/blob/main/imgs/example.png">
