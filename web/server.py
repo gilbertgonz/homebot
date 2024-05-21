@@ -51,6 +51,9 @@ def gen():
 
 @app.route('/get_gps')
 def log_gps():
+    '''
+    Logging and showing IP address info
+    '''
     ip = request.remote_addr
 
     # Geolocation API URL
@@ -79,7 +82,7 @@ def log_gps():
     if response.status_code == 200:
         data = response.json()
         if data['status'] == 'success':
-            log_msg = f"{timestamp} --- IP Address: {data['query']}, Country: {data['country']}, State: {data['regionName']}, City: {data['city']}, Latitude: {data['lat']}, Longitude: {data['lon']}"
+            log_msg = f"{timestamp} --- IP Address: {data['query']}, Location: [{data['city']}, {data['regionName']}, {data['country']}], GPS Coord: [{data['lat']}, {data['lon']}]"
             gps_data = {
                 'latitude': f"{data['lat']}",
                 'longitude': f"{data['lon']}"
@@ -96,6 +99,7 @@ def index():
     '''
     Video streaming home page.
     '''
+    log_gps()
     return render_template('index.html')
 
 @app.route('/video_feed')
@@ -103,8 +107,6 @@ def video_feed():
     '''
     Video streaming route
     '''
-
-    log_gps()
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':

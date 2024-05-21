@@ -31,14 +31,14 @@ img{
 }
 
 .map-container {
-  text-align: center; /* Ensures that inline-block elements are centered */
+  text-align: center;
 }
 #map_frame {
   display: block;
   margin: 0 auto;
-  width: 50%; 
-  height: 600PX; 
-  border: 2px solid black; 
+  width: 40%; 
+  height: 450PX; 
+  border: 0px; 
 }
 
 footer{
