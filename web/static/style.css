@@ -1,7 +1,8 @@
 body {
-  font-family:MD Primer Bold,Rubik,Lato,Lucida Grande,Lucida Sans Unicode,Tahoma,Sans-Serif;  font-style: normal;
+  font-family: 'Open Sans', sans-serif;
   background-color: #15202B;
   background: linear-gradient(0deg, #121213,#15202B);
+  color:#ffffff;
 }
 
 .top_bar{
@@ -29,12 +30,15 @@ img{
   height: 100%;
 }
 
-/* Center items */
-.flex-parent {
-  display: flex;
+.map-container {
+  text-align: center; /* Ensures that inline-block elements are centered */
 }
-.jc-center {
-  justify-content: center;
+#map_frame {
+  display: block;
+  margin: 0 auto;
+  width: 50%; 
+  height: 600PX; 
+  border: 2px solid black; 
 }
 
 footer{

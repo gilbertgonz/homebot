@@ -49,7 +49,10 @@ def gen():
         vs.release() 
         init_vid = False
 
-def log_txt(ip):
+@app.route('/get_gps')
+def log_gps():
+    ip = request.remote_addr
+
     # Geolocation API URL
     api_url = f"http://ip-api.com/json/{ip}"
 
@@ -66,20 +69,27 @@ def log_txt(ip):
         os.makedirs(dir)
     file_name = f'{dir}/server_log.txt'
 
+    # Default log msg and gps_data
+    log_msg = f"{timestamp} --- IP Address: {ip}"
+    gps_data = {
+        'latitude': "INVALID",
+        'longitude': "INVALID"
+    }
 
     if response.status_code == 200:
         data = response.json()
-        if data['status'] == 'fail': # handling local testing
-            log_msg = f"{timestamp} --- IP Address: {ip}"
-        else:
+        if data['status'] == 'success':
             log_msg = f"{timestamp} --- IP Address: {data['query']}, Country: {data['country']}, State: {data['regionName']}, City: {data['city']}, Latitude: {data['lat']}, Longitude: {data['lon']}"
-    else:
-        log_msg = f"{timestamp} --- IP Address: {ip}"
+            gps_data = {
+                'latitude': f"{data['lat']}",
+                'longitude': f"{data['lon']}"
+            }  
 
     # Write to txt file
     with open(file_name, 'a') as f:
         f.write(log_msg + '\n')
 
+    return jsonify(gps_data)
 
 @app.route('/')
 def index():
@@ -94,7 +104,7 @@ def video_feed():
     Video streaming route
     '''
 
-    log_txt(request.remote_addr)
+    log_gps()
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
