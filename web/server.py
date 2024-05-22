@@ -50,6 +50,9 @@ def gen():
         INIT_VID = False
 
 def return_img():
+    '''
+    Return a single image from the camera
+    '''
     if INIT_VID:
         ret, frame = VS.read()
         if not ret:
