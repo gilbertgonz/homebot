@@ -50,7 +50,7 @@ def gen():
         INIT_VID = False
 
 @app.route('/get_gps')
-def log_gps():
+def ip_notify():
     '''
     Logging and showing IP address info
     '''
@@ -106,7 +106,7 @@ def index():
     '''
     Video streaming home page.
     '''
-    log_gps()
+    ip_notify()
     return render_template('index.html')
 
 @app.route('/video_feed')

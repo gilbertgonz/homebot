@@ -27,6 +27,9 @@ CARRIER_MAP = {
 }
 
 def send_email(sub, msg, img):
+    '''
+    Send email to user.
+    '''
     # Email content
     subject = f"{sub}"
     body = f"{msg}"
@@ -54,6 +57,9 @@ def send_email(sub, msg, img):
         server.sendmail(EMAIL, EMAIL, text)
 
 def send_text(sub, msg, img):
+    '''
+    Send text to user.
+    '''
     to_email = CARRIER_MAP[CARRIER]
 
     # Create message
