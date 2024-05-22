@@ -8,7 +8,18 @@ Personal notes for deploying software to a target machine
 sudo apt install qemu-user-static
 
 # build
-$ docker build --force-rm --build-arg USER_ARG=enter_username --build-arg PASSWD_ARG=enter_passwd --build-arg PORT_ARG=enter_port --platform linux/arm64 -t homebot:arm64 .
+$ docker build \
+    --force-rm \
+    --build-arg USER=your_username \
+    --build-arg PASSWD=your_passwd \
+    --build-arg PORT=your_port \
+    --build-arg ENABLE_NOTIFICATIONS=1_foryes_or_0_forno \
+    --build-arg EMAIL=your_email \
+    --build-arg EMAIL_PASSWD=your_email_passwd \
+    --build-arg PHONE_NUM=your_phone_number \
+    --build-arg CARRIER=your_phone_carrier \
+    --platform linux/arm64 \
+    -t homebot:arm64 .
 
 # save image
 $ docker save $image_id > homebot.tar

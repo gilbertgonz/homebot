@@ -1,36 +1,36 @@
-from flask import Flask, render_template, Response, request, jsonify
-from flask_basicauth import BasicAuth
 import cv2
 import requests
 from datetime import datetime
 import os
 
-app = Flask(__name__)
+# Email and SMS
+from libs.notifications import *
 
-# Setting up basic authentication
-app.config['BASIC_AUTH_USERNAME'] = str(os.environ.get('USER'))
-app.config['BASIC_AUTH_PASSWORD'] = str(os.environ.get('PASSWD'))
-app.config['BASIC_AUTH_FORCE'] = True
-basic_auth = BasicAuth(app)
+# Flask
+from flask import Flask, render_template, Response, request, jsonify
+from flask_basicauth import BasicAuth
 
 # Global vars
-init_vid = False
-vs = None
+ENABLE_NOTIFICATIONS = int(os.environ.get('ENABLE_NOTIFICATIONS'))
+INIT_VID = False
+VS = None
+
+app = Flask(__name__)
 
 def gen():
     '''
     Video streaming generator function.
     '''
-    global init_vid # yes, i know 'global' vars are not cute, its just a prototype
-    global vs
+    global INIT_VID # yes, i know 'global' vars are not cute, its just a prototype
+    global VS
 
-    if not init_vid: # only initialize once for all clients
-        vs = cv2.VideoCapture(0)
-        init_vid = True
+    if not INIT_VID: # only initialize once for all clients
+        VS = cv2.VideoCapture(0)
+        INIT_VID = True
 
     try:
         while True:
-            ret, frame = vs.read()
+            ret, frame = VS.read()
             
             if not ret:
                 break
@@ -46,8 +46,8 @@ def gen():
         # Handle the OpenCV error
         print(f"OpenCV Error: {e}")
     finally:
-        vs.release() 
-        init_vid = False
+        VS.release() 
+        INIT_VID = False
 
 @app.route('/get_gps')
 def log_gps():
@@ -67,7 +67,7 @@ def log_gps():
     timestamp = current_time.strftime("%d/%b/%Y %H:%M:%S")
 
     # Create save dir
-    dir = './server_logs'
+    dir = '/server_logs'
     if not os.path.exists(dir):
         os.makedirs(dir)
     file_name = f'{dir}/server_log.txt'
@@ -92,6 +92,13 @@ def log_gps():
     with open(file_name, 'a') as f:
         f.write(log_msg + '\n')
 
+    # Send notifications if enabled
+    if ENABLE_NOTIFICATIONS:
+        img = None
+        sub = f"HomeBot: New user"
+        send_email(sub, log_msg, img)
+        send_text(sub, log_msg, img)
+
     return jsonify(gps_data)
 
 @app.route('/')
@@ -110,4 +117,10 @@ def video_feed():
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
+    # Setting up basic authentication
+    app.config['BASIC_AUTH_USERNAME'] = str(os.environ.get('USER'))
+    app.config['BASIC_AUTH_PASSWORD'] = str(os.environ.get('PASSWD'))
+    app.config['BASIC_AUTH_FORCE'] = True
+    basic_auth = BasicAuth(app)
+
     app.run(host='0.0.0.0', port=os.environ.get('PORT'), debug=False, threaded=True)

@@ -9,7 +9,7 @@
 \__|  \__| \______/ \__| \__| \__| \_______|\_______/  \______/  \____/
 ```
  
-HomeBot is an open source video surveillance application. It was made to offer an alternative to high-cost monitoring and surveillance systems. It currently provides real-time video streaming with basic authentication and logs info of connected clients (for security purposes), all in a containerized environment for easy deployment to any platform with a USB camera
+HomeBot is an open source video surveillance application. It was made to offer an alternative to high-cost monitoring and surveillance systems. It currently provides real-time video streaming, real-time email and text notifications, basic authentication, and a containerized environment for easy deployment to any platform with a USB camera or webcam
 
 <p align="center">
   <img src="https://github.com/gilbertgonz/homebot/blob/main/imgs/example.png">
@@ -23,17 +23,27 @@ HomeBot is an open source video surveillance application. It was made to offer a
     git clone https://github.com/gilbertgonz/homebot.git
     ```
 
-2. Build:
+3. Build:
     ```
-    $ docker build --build-arg USER_ARG=enter_username --build-arg PASSWD_ARG=enter_passwd --build-arg PORT_ARG=enter_port -t homebot  .
+    $ docker build \
+        --build-arg USER=your_username \
+        --build-arg PASSWD=your_passwd \
+        --build-arg PORT=your_port \
+        --build-arg ENABLE_NOTIFICATIONS=1_foryes_or_0_forno \
+        --build-arg EMAIL=your_email \
+        --build-arg EMAIL_PASSWD=your_email_passwd \
+        --build-arg PHONE_NUM=your_phone_number \
+        --build-arg CARRIER=your_phone_carrier \
+        -t homebot .
     ```
+    i. If you enabled notifications, please note only gmail is supported. Also, you will need to make an app-specific password for your gmail, see the top answer [here](https://stackoverflow.com/questions/77340573/python-script-for-sending-an-email-via-gmail-refuses-to-accept-username-and-app) for easy guidance on how to do so.
 
-3. Run:
+4. Run:
     ```
     $ docker compose up --remove-orphans -d
     ```
 
-4. Open browser and see video stream:
+5. Open browser and see video stream:
     ```
     http://127.0.0.1:PORT_NUMBER
     ```
