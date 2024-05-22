@@ -29,14 +29,14 @@ HomeBot is an open source video surveillance application. It was made to offer a
         --build-arg USER=your_username \
         --build-arg PASSWD=your_passwd \
         --build-arg PORT=your_port \
-        --build-arg ENABLE_NOTIFICATIONS=1_foryes_or_0_forno \
+        --build-arg ENABLE_NOTIFICATIONS=0 \
         --build-arg EMAIL=your_email \
         --build-arg EMAIL_PASSWD=your_email_passwd \
         --build-arg PHONE_NUM=your_phone_number \
         --build-arg CARRIER=your_phone_carrier \
         -t homebot .
     ```
-    i. If you enabled notifications, please note only gmail is supported. Also, you will need to make an app-specific password for your gmail, see the top answer [here](https://stackoverflow.com/questions/77340573/python-script-for-sending-an-email-via-gmail-refuses-to-accept-username-and-app) for easy guidance on how to do so.
+    i. To enable notifications, input 1. Please note only gmail is supported. Also, you will need to make an app-specific password for your gmail, see the top answer [here](https://stackoverflow.com/questions/77340573/python-script-for-sending-an-email-via-gmail-refuses-to-accept-username-and-app) for easy guidance on how to do so.
 
 4. Run:
     ```

@@ -1,6 +1,6 @@
 async function update_map() {
     try {
-        const response = await fetch('/get_gps');
+        const response = await fetch('/ip_notify');
         const data = await response.json();
         const { latitude, longitude } = data;
         

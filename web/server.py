@@ -49,7 +49,17 @@ def gen():
         VS.release() 
         INIT_VID = False
 
-@app.route('/get_gps')
+def return_img():
+    if INIT_VID:
+        ret, frame = VS.read()
+        if not ret:
+            print("Failed to connect to device")
+            return None
+        return frame
+    else:
+        return None
+    
+@app.route('/ip_notify')
 def ip_notify():
     '''
     Logging and showing IP address info
@@ -94,7 +104,7 @@ def ip_notify():
 
     # Send notifications if enabled
     if ENABLE_NOTIFICATIONS:
-        img = None
+        img = return_img()
         sub = f"HomeBot: New user"
         send_email(sub, log_msg, img)
         send_text(sub, log_msg, img)

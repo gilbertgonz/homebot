@@ -26,7 +26,7 @@ ENV USER=${USER} \
     EMAIL=${EMAIL} \
     EMAIL_PASSWD=${EMAIL_PASSWD} \
     PHONE_NUM=${PHONE_NUM} \
-    CARRIER=${CARRIER} \
+    CARRIER=${CARRIER}
 
 # Copy files
 COPY web/ /web
