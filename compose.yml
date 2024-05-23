@@ -8,4 +8,5 @@ services:
     privileged: true
     volumes:
       - ./server_logs:/server_logs
+      - /etc/localtime:/etc/localtime:ro # syncing timezone
     command: python3 server.py
