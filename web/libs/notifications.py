@@ -16,7 +16,7 @@ EMAIL_PASSWD = str(os.environ.get('EMAIL_PASSWD'))
 CARRIER = str(os.environ.get('CARRIER'))
 PHONE_NUM = str(os.environ.get('PHONE_NUM'))
 HOST = "smtp.gmail.com"
-CARRIER_MAP = {
+CARRIER_LIST = {
     "verizon": "vtext.com",
     "tmobile": "tmomail.net",
     "sprint": "messaging.sprintpcs.com",
@@ -60,7 +60,7 @@ def send_text(sub, msg, img):
     '''
     Send text to user.
     '''
-    to_email = CARRIER_MAP[CARRIER]
+    to_email = CARRIER_LIST[CARRIER]
 
     # Create message
     message = EmailMessage()

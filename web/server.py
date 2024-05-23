@@ -110,7 +110,7 @@ def ip_notify():
         img = return_img()
         sub = f"HomeBot: New user"
         send_email(sub, log_msg, img)
-        send_text(sub, log_msg, img)
+        # send_text(sub, log_msg, img)
 
     return jsonify(gps_data)
 
