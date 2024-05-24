@@ -2,8 +2,17 @@ import cv2
 from ultralytics import YOLO
 import torch
 
+'''
+Notes:
+- Installed all major cuda packages on jetson using "sudo apt install nvidia-jetpack"
+- Fixed "torch with no cuda" issue by installing cuda locally (https://forums.developer.nvidia.com/t/pytorch-for-jetson/72048)
+- Fixed "libcudnn9.so file not found" error by installing it `sudo apt-get install libcudnn9 libcudnn9-dev`
+'''
+
 def detect(cv_image, model, thresh=0.5):
     results = model.predict(cv_image, conf=thresh, verbose=False) # only detect humans
+
+    annotated_frame = results[0].plot()
 
     for r in results:
         boxes = r.boxes
@@ -12,21 +21,19 @@ def detect(cv_image, model, thresh=0.5):
             x1, y1, x2, y2 = map(int, bbox)
             c = box.cls
 
-            # Draw bounding box
-            cv2.rectangle(cv_image, (x1, y1), (x2, y2), (0, 255, 0), 2)
+    return annotated_frame
 
 def main():
     # Load YOLO model
     model = YOLO("yolov8n.pt")
 
     # Set GPU if available
-    device = torch.device("cuda") 
-    # if torch.cuda.is_available():
-    #     device = torch.device("cuda") 
-    #     print("cuda")
-    # else:
-    #     device = torch.device("cpu") 
-    #     print("cpu")
+    if torch.cuda.is_available():
+        device = torch.device("cuda") 
+        print("cuda")
+    else:
+        device = torch.device("cpu") 
+        print("cpu")
 
     model.to(device=device)
 
@@ -37,9 +44,9 @@ def main():
         if not ret:
             break
 
-        detect(frame, model)
+        annotated_frame = detect(frame, model)
 
-        cv2.imshow('Frame', frame)
+        cv2.imshow('Frame', annotated_frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
