@@ -44,7 +44,7 @@
     $ ./run.sh
     ```
 
-    a. No worries about restarting the container if you shutoff your machine, the container will always restart (unless you manually stop it). 
+    a. No worries about restarting the container if you shut down your machine, the container will always restart (unless you manually stop it). 
 
 5. Open browser and see video stream:
     ```
