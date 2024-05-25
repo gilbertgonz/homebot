@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  web:
+  web_cpu:
     init: true
     restart: unless-stopped
     image: homebot:latest
@@ -10,3 +10,20 @@ services:
       - ./server_logs:/server_logs
       - /etc/localtime:/etc/localtime:ro # syncing timezone
     command: python3 server.py
+  web_gpu:
+    init: true
+    restart: unless-stopped
+    image: homebot:latest
+    network_mode: "host"
+    privileged: true
+    volumes:
+      - ./server_logs:/server_logs
+      - /etc/localtime:/etc/localtime:ro # syncing timezone
+    command: python3 server.py
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [gpu]

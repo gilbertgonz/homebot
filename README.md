@@ -9,7 +9,7 @@
 \__|  \__| \______/ \__| \__| \__| \_______|\_______/  \______/  \____/
 ```
  
-HomeBot is an open source video surveillance application. It was made to offer an alternative to high-cost monitoring and surveillance systems. It currently provides real-time video streaming, real-time email and text notifications, basic authentication, and a containerized environment for easy deployment to any platform with a USB camera or webcam
+**HomeBot** is an open source video surveillance application. It was made to offer an alternative to high-cost monitoring and surveillance systems. It currently provides real-time video streaming, real-time email notifications, human detection using [PyTorch](https://github.com/pytorch/pytorch) and deep learning model [YOLOv8](https://github.com/ultralytics/ultralytics), basic authentication, and a containerized environment for easy deployment to any platform with a USB camera or webcam
 
 <p align="center">
   <img src="https://github.com/gilbertgonz/homebot/blob/main/imgs/example.png">
@@ -30,18 +30,21 @@ HomeBot is an open source video surveillance application. It was made to offer a
         --build-arg PASSWD=your_passwd \
         --build-arg PORT=your_port \
         --build-arg ENABLE_NOTIFICATIONS=0 \
+        --build-arg ENABLE_DETECTION=0 \
         --build-arg EMAIL=your_email \
         --build-arg EMAIL_PASSWD=your_email_passwd \
-        --build-arg PHONE_NUM=your_phone_number \
-        --build-arg CARRIER=your_phone_carrier \
         -t homebot .
     ```
-    i. To enable notifications, input 1. Please note only gmail is supported. Also, you will need to make an app-specific password for your gmail, see the top answer [here](https://stackoverflow.com/questions/77340573/python-script-for-sending-an-email-via-gmail-refuses-to-accept-username-and-app) for easy guidance on how to do so.
+    a. To **enable notifications**, input 1. Please note only gmail is supported. Also, you will need to make an app-specific password for your gmail, see the top answer [here](https://stackoverflow.com/questions/77340573/python-script-for-sending-an-email-via-gmail-refuses-to-accept-username-and-app) for easy guidance on how to do so.
 
-4. Run:
+    b. To **enable human detection**, input 1.
+
+4. Run: 
     ```
-    $ docker compose up --remove-orphans -d
+    $ ./run.sh
     ```
+
+    a. No worries about restarting the container if you shutoff your machine, the container will always restart (unless you manually stop it). 
 
 5. Open browser and see video stream:
     ```
@@ -50,11 +53,11 @@ HomeBot is an open source video surveillance application. It was made to offer a
 
 6. If you want to set up online video monitoring, you need to:
     
-    i. Find your public IP address (you can use [WhatIsMyIp](https://whatismyipaddress.com/) to find it).
+    a. Find your public IP address (you can use [WhatIsMyIp](https://whatismyipaddress.com/) to find it).
     
-    ii. From your router, forward the port you passed in the previous `docker build` command. 
+    b. From your router, forward the port you passed in the previous `docker build` command. 
 
-    iii.  Open browser and see video stream outside local network:
+    c.  Open browser and see video stream outside local network:
     ```
     http://YOUR_PUBLIC_IP:PORT_NUMBER
     ```

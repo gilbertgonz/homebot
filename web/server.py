@@ -3,19 +3,26 @@ import requests
 from datetime import datetime
 import os
 
-# Email and SMS
+# Email lib
 from libs.notifications import *
 
-# Flask
+# Flask lib
 from flask import Flask, render_template, Response, request, jsonify
 from flask_basicauth import BasicAuth
 
 # Global vars
 ENABLE_NOTIFICATIONS = int(os.environ.get('ENABLE_NOTIFICATIONS'))
+ENABLE_DETECTION = int(os.environ.get('ENABLE_DETECTION'))
 INIT_VID = False
 VS = None
 
+# Detection lib
+if ENABLE_DETECTION: # only import if detection enabled so we don't download yolov8n for no reason ;)
+    from libs.detect import *
+
 app = Flask(__name__)
+
+## TODO: create seperate thread/process for email notifiations
 
 def gen():
     '''
@@ -35,13 +42,23 @@ def gen():
             if not ret:
                 break
 
+            detected_human = False
+            if ENABLE_DETECTION:
+                frame, detected_human = detect(frame)
+
             # Encode frames
             ret, jpeg = cv2.imencode('.jpg', frame)
-            frame = jpeg.tobytes()
+            encoded_annotated_frame = jpeg.tobytes()
             yield (
                 b'--frame\r\n'
-                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + encoded_annotated_frame + b'\r\n'
             )
+
+            if detected_human and ENABLE_NOTIFICATIONS:
+                sub = f"HomeBot: New human detected"
+                msg = ""
+                send_email(sub, msg, frame)
+
     except cv2.error as e:
         # Handle the OpenCV error
         print(f"OpenCV Error: {e}")
@@ -56,7 +73,7 @@ def return_img():
     if INIT_VID:
         ret, frame = VS.read()
         if not ret:
-            print("Failed to connect to device")
+            print("Failed to connect to camera")
             return None
         return frame
     else:
