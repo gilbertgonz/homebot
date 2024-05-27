@@ -126,7 +126,7 @@ def ip_notify():
     if ENABLE_NOTIFICATIONS:
         img = return_img()
         sub = f"HomeBot: New user"
-        send_email(sub, log_msg, img)
+        send_email(sub, log_msg, img=None)
         # send_text(sub, log_msg, img)
 
     return jsonify(gps_data)

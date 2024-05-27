@@ -35,8 +35,10 @@ model = YOLO("yolov8n.pt")
 # Set GPU if available
 if torch.cuda.is_available():
     device = torch.device("cuda") 
+    print("GPU available")
 else:
-    device = torch.device("cpu") 
+    device = torch.device("cpu")
+    print("GPU not available") 
 
 model.to(device=device)
 
