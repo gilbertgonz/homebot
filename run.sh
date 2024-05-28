@@ -13,6 +13,8 @@ fi
 
 if [ "$USE_GPU" = true ]; then
     docker compose up web_gpu --remove-orphans -d
+    echo "HomeBot up and running with human detection!"
 else
     docker compose up web_cpu --remove-orphans -d
+    echo "HomeBot up and running without human detection"
 fi

@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  web_gpu:
+    init: true
+    restart: unless-stopped
+    image: homebot:latest
+    runtime: nvidia
+    network_mode: "host"
+    privileged: true
+    volumes:
+      - ./server_logs:/server_logs
+      - /etc/localtime:/etc/localtime:ro # syncing timezone
+    command: python3 server.py

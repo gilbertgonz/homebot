@@ -33,7 +33,7 @@
         --build-arg ENABLE_DETECTION=0 \
         --build-arg EMAIL=your_email \
         --build-arg EMAIL_PASSWD=your_email_passwd \
-        -t homebot .
+        -t homebot:latest .
     ```
     a. To **enable notifications**, input 1. Please note only gmail is supported. Also, you will need to make an app-specific password for your gmail, see the top answer [here](https://stackoverflow.com/questions/77340573/python-script-for-sending-an-email-via-gmail-refuses-to-accept-username-and-app) for easy guidance on how to do so.
 
@@ -41,7 +41,7 @@
 
 4. Run: 
     ```
-    $ ./run.sh
+    $ ./run.sh # this script will start the docker container and utilize your GPU resources if available
     ```
 
     a. No worries about restarting the container if you shut down your machine, the container will always restart (unless you manually stop it). 
