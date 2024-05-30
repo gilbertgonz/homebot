@@ -2,6 +2,9 @@ import cv2
 import requests
 from datetime import datetime
 import os
+import threading
+import queue
+import time
 
 # Email lib
 from libs.notifications import *
@@ -24,61 +27,50 @@ app = Flask(__name__)
 
 ## TODO: create seperate thread/process for email notifiations
 
-def gen():
-    '''
-    Video streaming generator function.
-    '''
-    global INIT_VID # yes, i know 'global' vars are not cute, its just a prototype
+frame_queue = queue.Queue(maxsize=10)  # Thread-safe queue to hold frames
+
+def camera_capture():
+    global INIT_VID
     global VS
-
-    if not INIT_VID: # only initialize once for all clients
-        VS = cv2.VideoCapture(0)
-        INIT_VID = True
-
-    try:
-        while True:
-            ret, frame = VS.read()
-            
-            if not ret:
-                break
-
-            detected_human = False
-            if ENABLE_DETECTION:
-                frame, detected_human = detect(frame)
-
-            # Encode frames
-            ret, jpeg = cv2.imencode('.jpg', frame)
-            encoded_annotated_frame = jpeg.tobytes()
-            yield (
-                b'--frame\r\n'
-                b'Content-Type: image/jpeg\r\n\r\n' + encoded_annotated_frame + b'\r\n'
-            )
-
+    INIT_VID = True
+    VS = cv2.VideoCapture(0)
+    fps = 1/30
+    
+    while True:
+        ret, frame = VS.read()
+        if not ret:
+            print("Failed to capture image")
+            continue
+        
+        if ENABLE_DETECTION:
+            frame, detected_human = detect(frame)
             if detected_human and ENABLE_NOTIFICATIONS:
                 sub = f"HomeBot: New human detected"
                 msg = ""
-                send_email(sub, msg, frame)
+                send_email_thread(sub, msg, frame)
+        
+        if not frame_queue.full():
+            frame_queue.put(frame)
+        time.sleep(fps)  # Sleep for a short while to control rate
 
-    except cv2.error as e:
-        # Handle the OpenCV error
-        print(f"OpenCV Error: {e}")
-    finally:
-        VS.release() 
-        INIT_VID = False
+    VS.release()
 
-def return_img():
-    '''
-    Return a single image from the camera
-    '''
-    if INIT_VID:
-        ret, frame = VS.read()
-        if not ret:
-            print("Failed to connect to camera")
-            return None
-        return frame
-    else:
-        return None
-    
+def gen():
+    while True:
+        frame = frame_queue.get()
+        if frame is None:
+            break
+        
+        ret, jpeg = cv2.imencode('.jpg', frame)
+        encoded_annotated_frame = jpeg.tobytes()
+        yield (
+            b'--frame\r\n'
+            b'Content-Type: image/jpeg\r\n\r\n' + encoded_annotated_frame + b'\r\n'
+        )
+
+def send_email_thread(sub, msg, img):
+    threading.Thread(target=send_email, args=(sub, msg, img)).start()
+
 @app.route('/ip_notify')
 def ip_notify():
     '''
@@ -124,9 +116,8 @@ def ip_notify():
 
     # Send notifications if enabled
     if ENABLE_NOTIFICATIONS:
-        img = return_img()
         sub = f"HomeBot: New user"
-        send_email(sub, log_msg, img=None)
+        send_email_thread(sub, log_msg, img=None)
         # send_text(sub, log_msg, img)
 
     return jsonify(gps_data)
@@ -152,5 +143,10 @@ if __name__ == '__main__':
     app.config['BASIC_AUTH_PASSWORD'] = str(os.environ.get('PASSWD'))
     app.config['BASIC_AUTH_FORCE'] = True
     basic_auth = BasicAuth(app)
+
+    # Start camera capture thread
+    camera_thread = threading.Thread(target=camera_capture)
+    camera_thread.daemon = True
+    camera_thread.start()
 
     app.run(host='0.0.0.0', port=os.environ.get('PORT'), debug=False, threaded=True)

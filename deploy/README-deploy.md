@@ -18,7 +18,7 @@ $ docker build \
     --build-arg EMAIL=your_email \
     --build-arg EMAIL_PASSWD=your_email_passwd \
     --platform linux/arm64 \
-    -t homebot:arm64 -f Dockerfile.jetson .
+    -t homebot:arm64 -f Dockerfile.deploy .
 
 # save image
 $ docker save $image_id > homebot.tar
