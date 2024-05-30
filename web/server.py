@@ -25,11 +25,12 @@ if ENABLE_DETECTION: # only import if detection enabled so we don't download yol
 
 app = Flask(__name__)
 
-## TODO: create seperate thread/process for email notifiations
-
-frame_queue = queue.Queue(maxsize=10)  # Thread-safe queue to hold frames
+frame_queue = queue.Queue(maxsize=10)  # thread-safe queue to hold frames
 
 def camera_capture():
+    '''
+    Camera capture thread
+    '''
     global INIT_VID
     global VS
     INIT_VID = True
@@ -51,11 +52,14 @@ def camera_capture():
         
         if not frame_queue.full():
             frame_queue.put(frame)
-        time.sleep(fps)  # Sleep for a short while to control rate
+        time.sleep(fps)  # control rate
 
     VS.release()
 
 def gen():
+    '''
+    Pulling from image queue and returning encoded image
+    '''
     while True:
         frame = frame_queue.get()
         if frame is None:
@@ -101,6 +105,7 @@ def ip_notify():
         'longitude': "INVALID"
     }
 
+    # Extract data if successful response
     if response.status_code == 200:
         data = response.json()
         if data['status'] == 'success':
