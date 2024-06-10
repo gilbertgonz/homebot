@@ -12,7 +12,7 @@
 **HomeBot** is an open source video surveillance application. It was made to offer an alternative to high-cost monitoring and surveillance systems. It currently provides real-time video streaming, real-time email notifications, human detection using [PyTorch](https://github.com/pytorch/pytorch) and deep learning model [YOLOv8](https://github.com/ultralytics/ultralytics), basic authentication, and a containerized environment for easy deployment to any platform with a USB camera or webcam
 
 <p align="center">
-  <img src="https://github.com/gilbertgonz/homebot/blob/main/imgs/example.png">
+  <img src="imgs/results.gif" alt="Results gif">
 </p>
 
 ## How to run:
