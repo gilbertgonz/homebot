@@ -9,7 +9,7 @@
 \__|  \__| \______/ \__| \__| \__| \_______|\_______/  \______/  \____/
 ```
  
-**HomeBot** is an open source video surveillance application. It was made to offer an alternative to high-cost monitoring and surveillance systems. It currently provides real-time video streaming, real-time email notifications, human detection using [YOLOv8](https://github.com/ultralytics/ultralytics), basic authentication, and a containerized environment for easy deployment to any platform with a USB camera or webcam
+**HomeBot** is an open source video surveillance application. It was made to offer an alternative to high-cost monitoring and surveillance systems. It currently provides real-time video streaming, real-time email notifications, human detection using [YOLOv8](https://github.com/ultralytics/ultralytics), basic authentication, and a containerized environment for easy deployment to any platform with a USB camera + machine system
 
 <p align="center">
   <img src="imgs/results.gif" alt="Results gif">
